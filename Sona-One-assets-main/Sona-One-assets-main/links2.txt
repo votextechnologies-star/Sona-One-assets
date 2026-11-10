@@ -1,0 +1,198 @@
+const SCENES: Record<string, { scene: SceneId; title: string; scroll: boolean }> = {
+  '/': { scene: 'home', title: 'SONA One — Engineered silence', scroll: true },
+  '/studio': { scene: 'studio', title: 'Studio — SONA One', scroll: false },
+  '/story': { scene: 'story', title: 'Story — SONA One', scroll: true },
+  '/lookbook': { scene: 'lookbook', title: 'Lookbook — SONA One', scroll: false },
+  '/preorder': { scene: 'preorder', title: 'Pre-order — SONA One', scroll: true },
+  '/credits': { scene: 'credits', title: 'Credits — SONA One', scroll: true },
+  '/listen': { scene: 'listen', title: 'Listen — SONA One', scroll: true },
+  '/specs': { scene: 'specs', title: 'Tech specs — SONA One', scroll: true },
+  '/shop': { scene: 'shop', title: 'Accessories — SONA', scroll: false },
+  '/journal': { scene: 'ambient', title: 'Journal — SONA', scroll: true },
+  '/support': { scene: 'ambient', title: 'Support — SONA', scroll: true },
+  '/about': { scene: 'about', title: 'About — SONA', scroll: true },
+  '/legal': { scene: 'ambient', title: 'Privacy & terms — SONA', scroll: true },
+}
+
+export function BagIcon({ className = '' }: { className?: string }) {
+    return (
+        <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+            <path d="M5 8h14l-1.2 11.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8L5 8Z" />
+            <path d="M9 8V6.5a3 3 0 0 1 6 0V8" />
+        </svg>
+    )
+}
+
+const ASSETS: [string, string, string][] = [
+    ['Studio HDRIs', 'studio_small_09, wooden_studio_16, monochrome_studio_02, white_studio_04 by Poly Haven', 'CC0'],
+    ['Leather texture', 'leather_white by Poly Haven', 'CC0'],
+    ['Knit texture', 'cotton_jersey by Poly Haven', 'CC0'],
+    ['Headphone model', 'Modelled procedurally in code (lathe, sweep and tube geometry)', 'Original'],
+    ['Soundtrack', 'Generative score synthesised live with the Web Audio API', 'Original'],
+    ['Typefaces', 'Clash Grotesk, Boska and Switzer by Indian Type Foundry via Fontshare', 'ITF FFL'],
+]
+
+const STACK: [string, string][] = [
+    ['Rendering', 'three.js r186, React Three Fiber 9, drei'],
+    ['Post-processing', 'N8AO ambient occlusion, mipmap bloom, AgX tone mapping, film grain'],
+    ['Motion', 'GSAP ScrollTrigger + SplitText, Lenis smooth scroll on one shared ticker'],
+    ['Physics', 'Rapier (WASM), lazy-loaded on the 404 page only'],
+    ['State', 'Zustand, with configurator state serialised to the URL'],
+    ['Shaders', 'Custom GLSL for the audio ring, lookbook distortion and glow'],
+]
+
+const ENVS: Record<ListenEnv, { label: string; place: string; db: number; icon: ReactNode }> = {
+    plane: {
+        label: 'Plane',
+        place: 'Row 23, over the wing',
+        db: 82,
+        icon: <path d="M3 13.5 21 8l-2.2 4.3L9 15.5l-1.5 4-1.8-.4.4-4L3 13.5Zm7.2-3.6L7 6.8l2-.6 5 2.2" />,
+    },
+    train: {
+        label: 'Train',
+        place: 'Carriage four, rush hour',
+        db: 76,
+        icon: <path d="M7 4h10a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3Zm-3 8h16M8 18l-2 3m10-3 2 3M8 15h.01M16 15h.01" />,
+    },
+    cafe: {
+        label: 'Café',
+        place: 'Saturday, by the espresso machine',
+        db: 68,
+        icon: <path d="M4 9h13v4a6 6 0 0 1-6 6h-1a6 6 0 0 1-6-6V9Zm13 1h1.5a2.5 2.5 0 0 1 0 5H17M8 3v3m4-3v3" />,
+    },
+    street: {
+        label: 'Street',
+        place: 'A crossing in the city centre',
+        db: 74,
+        icon: <path d="M5 16h14l-1.5-5.5a2 2 0 0 0-2-1.5h-7a2 2 0 0 0-2 1.5L5 16Zm0 0v3h2v-3m10 0v3h2v-3M7 13h.01M17 13h.01" />,
+    },
+}
+
+<svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                        {ENVS[id].icon}
+                                    </svg>
+
+
+const GROUPS: { title: string; rows: [string, string][] }[] = [
+  {
+    title: 'Sound',
+    rows: [
+      ['Driver', '40 mm dynamic, beryllium-coated dome'],
+      ['Range', '4 Hz – 40 kHz'],
+      ['Impedance', '32 Ω'],
+      ['Sensitivity', '102 dB SPL / mW'],
+      ['Spatial audio', 'Head tracking, per-ear tuning'],
+    ],
+  },
+  {
+    title: 'Noise control',
+    rows: [
+      ['Noise cancelling', 'Adaptive, up to −38 dB'],
+      ['Microphones', '8 total: 6 outside, 2 inside'],
+      ['Transparency', 'Natural, with voice lift'],
+      ['Calls', 'Beam-forming voice pickup, wind reduction'],
+    ],
+  },
+  {
+    title: 'Battery',
+    rows: [
+      ['Listening', '40 h with noise cancelling · 60 h without'],
+      ['Quick charge', '5 minutes gives 4 hours'],
+      ['Full charge', 'About 2 hours over USB-C'],
+      ['Battery service', 'Replaced by us for 5 years'],
+    ],
+  },
+  {
+    title: 'Connection',
+    rows: [
+      ['Bluetooth', '6.0, LE Audio'],
+      ['Multipoint', 'Two devices at once'],
+      ['Codecs', 'LC3, AAC, aptX Lossless'],
+      ['Wired', 'USB-C digital audio, 24-bit / 96 kHz'],
+    ],
+  },
+  {
+    title: 'Controls',
+    rows: [
+      ['Right cap', 'Touch to play, swipe for volume'],
+      ['Button', 'Noise cancelling, transparency, off'],
+      ['Wear sensors', 'Pauses when you lift a cup'],
+    ],
+  },
+  {
+    title: 'Build',
+    rows: [
+      ['Weight', '212 g'],
+      ['Size', '188 × 185 × 83 mm'],
+      ['Materials', 'Aluminium, nappa leather, recycled knit'],
+      ['Sweat and rain', 'IPX4'],
+      ['Recycled content', '70 % of the aluminium, 100 % of the knit'],
+    ],
+  },
+]
+
+const BOX: [string, ReactNode][] = [
+  ['SONA One', <path key="a" d="M5 14a7 7 0 0 1 14 0M4 14h3v5H5a1 1 0 0 1-1-1v-4Zm13 0h3v4a1 1 0 0 1-1 1h-2v-5Z" />],
+  ['Travel case', <ellipse key="b" cx="12" cy="12" rx="8.5" ry="5" />],
+  ['USB-C cable, 1.5 m', <path key="c" d="M5 7h3v4H5zM16 13h3v4h-3zM6.5 11c0 5 11 1 11 2" />],
+  ['A paper quick-start card', <path key="d" d="M7 4h10v16H7zM9.5 8h5M9.5 11h5M9.5 14h3" />],
+]
+
+<svg viewBox="0 0 24 24" className="h-10 w-10 text-paper/80" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              {icon}
+            </svg>
+
+const PRINCIPLES = [
+  ['Quiet first', 'We start every decision by asking what it does to the silence. A feature that adds noise, of any kind, does not ship.'],
+  ['Made to be opened', 'Cushions, canopy and battery all come out without tools. Headphones should age like a good jacket, not a phone.'],
+  ['One thing, well', 'We make one pair of headphones. Every hour we are not spending on a second product goes into the first.'],
+  ['Honest numbers', 'We measure the way you listen, on a real head, at real volumes. If a number only looks good in a lab, we leave it out.'],
+]
+
+const NUMBERS = [
+  ['1,400', 'Prototypes built and taken apart'],
+  ['41', 'Foams tested for the cushions'],
+  ['7 h', 'On the mill for every cap'],
+  ['5 yrs', 'Of free battery service'],
+]
+
+const TIMELINE = [
+  ['2021', 'Three friends, one former print shop in Lisbon, and a shared dislike of headphones that feel like tech.'],
+  ['2022', 'The first prototype. A shoebox, two drivers and a lot of tape. It sounded better than it looked.'],
+  ['2023', 'Otto arrives: a silicone test head who has since worn every pair we have made, for about 9,000 hours.'],
+  ['2024', 'Our own noise-cancelling tuning, built around comfort instead of the biggest number.'],
+  ['2025', 'Tooling for the milled cap, and a tannery in Porto that could hold our leather coating even.'],
+  ['2026', 'SONA One is announced. Pre-orders open.'],
+  ['2027', 'The first pairs leave the studio.'],
+]
+
+const CONTENT: Record<Tab, { title: string; updated: string; sections: [string, string][] }> = {
+  privacy: {
+    title: 'Privacy',
+    updated: 'Updated September 2026',
+    sections: [
+      ['The short version', 'This website collects nothing about you. There are no analytics, no trackers and no accounts. SONA is a fictional brand, and this site is a portfolio project.'],
+      ['Forms', 'The pre-order, newsletter and support forms check what you type so the page can respond, then stop there. Nothing is sent to a server, stored, or shared.'],
+      ['Your bag', 'Items you add to the bag are saved in your own browser (localStorage) so they are still there when you come back. They never leave your device. Clearing your browser data removes them.'],
+      ['Sound', 'The Listen page makes sound in your browser with the Web Audio API. It never asks for, or uses, your microphone.'],
+      ['Fonts and assets', 'Fonts, images and 3D lighting files are served from this site itself, so loading a page does not tell a third party you visited.'],
+    ],
+  },
+  terms: {
+    title: 'Terms',
+    updated: 'Updated September 2026',
+    sections: [
+      ['Nothing is for sale', 'SONA and SONA One do not exist. Prices, specifications and shipping dates are part of the design, not an offer. No order you place here is real, and no payment is ever taken.'],
+      ['Using this site', 'You are welcome to look around, take screenshots and share links. The code is public on GitHub for anyone who wants to see how it was made.'],
+      ['Third-party work', 'Studio lighting and textures come from Poly Haven under CC0. Typefaces come from Fontshare under the ITF Free Font License. Full details are on the credits page.'],
+    ],
+  },
+  cookies: {
+    title: 'Cookies',
+    updated: 'Updated September 2026',
+    sections: [
+      ['None', 'This site sets no cookies. That is why you did not see a banner asking you to accept any.'],
+      ['Local storage', 'The only thing stored is your bag, in your browser, as described in the privacy notes.'],
+    ],
+  },
+}
